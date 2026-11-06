@@ -1,0 +1,5 @@
+.git
+build-asan
+**/build-asan
+crashes/*
+!crashes/.gitkeep

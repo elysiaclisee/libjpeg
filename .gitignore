@@ -1,0 +1,13 @@
+# Build directories and binaries
+libjpeg-turbo-2.0.90/
+libjpeg-turbo-2.1.0/
+build-asan/
+**/build-asan/
+
+# Crash dumps
+crashes/*
+!crashes/.gitkeep
+
+# OS generated files
+.DS_Store
+Thumbs.db
