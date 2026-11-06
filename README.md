@@ -1,4 +1,4 @@
-# libjpeg-turbo Fuzzing & Security Research Environment
+# libjpeg-turbo Project
 
 Docker environment for fuzzing and reproducing vulnerabilities in `libjpeg-turbo`:
 - **v2.0.90 (2.1 beta1)**: Vulnerable version containing CVE-2021-20205, CVE-2021-29390, and CVE-2021-46822.
@@ -40,30 +40,3 @@ docker run --cap-add=SYS_PTRACE -it --rm -v "${PWD}:/workspace" -w /workspace li
 * **Patched (2.1.0)**:
   * `/workspace/libjpeg-turbo-2.1.0/build-asan/cjpeg`
   * `/workspace/libjpeg-turbo-2.1.0/build-asan/djpeg`
-
----
-
-## Example Usage
-
-### Test Sample Seed
-```bash
-/workspace/libjpeg-turbo-2.0.90/build-asan/cjpeg -outfile /tmp/test.jpg /workspace/seeds/sample.gif
-```
-
-### Black-box Fuzzing with zzuf
-```bash
-zzuf -s 1:100000 -r 0.001:0.05 -c -q \
-  /workspace/libjpeg-turbo-2.0.90/build-asan/cjpeg -outfile /dev/null /workspace/seeds/sample.gif
-```
-
-### Black-box Fuzzing with Radamsa
-```bash
-while true; do
-  radamsa /workspace/seeds/sample.gif > /tmp/mutated.gif
-  /workspace/libjpeg-turbo-2.0.90/build-asan/cjpeg -outfile /dev/null /tmp/mutated.gif 2>&1 | grep -E "AddressSanitizer|Floating point exception" && {
-    echo "[!] Crash found!"
-    cp /tmp/mutated.gif /workspace/crashes/crash_$(date +%s).gif
-    break
-  }
-done
-```
